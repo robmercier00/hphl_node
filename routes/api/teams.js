@@ -1,0 +1,51 @@
+const express = require('express');
+const router = express.Router();
+
+const Teams = require('../../models/Teams');
+const Players = require('../../models/Players');
+
+// @route GET teams
+// @description Get teams and their players
+// @access Public
+router.get('/', async (req, res) => {
+  Teams.find()
+    .then(
+      async (teams) => {
+        for (let team of teams) {
+          // Retrieve player names from their id
+          for (let player of team.players) {
+            const onePlayer = await Players.findOne({_id: player.id});
+
+            if (onePlayer.name) {
+              player.name = onePlayer.name;
+            }
+
+            if (!player.assists) {
+              player.assists = 0;
+            }
+
+            if (!player.goals) {
+              player.goals = 0;
+            }
+          };
+        };
+
+        res.json(teams);
+      }
+    )
+    .catch(err => res.status(404).json({ noTeamsfound: 'No Teams found' }));
+});
+
+// @route GET teams/:id
+// @description Get single team by id
+// @access Public
+router.get('/:id', (req, res) => {
+  const teamId = `UUID('${req.params.id}')`;
+  console.log(teamId);
+  Teams.find(req.params.id)
+    .then(team => res.json(team))
+    .catch(err => res.status(404).json({ noTeamFound: 'No Team found' }));
+});
+
+module.exports = router;
+// res.json(teams)
