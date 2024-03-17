@@ -11,7 +11,7 @@ const currentYear = new Date().getFullYear();
 
 connectDB();
 
-app.get('/', (req, res) => res.send(
+app.get('/api', (req, res) => res.send(
   `Hood Park Hockey League Official Website
   &copy; ${currentYear}`
 ));
@@ -24,7 +24,7 @@ app.use(cors({
   origin: 'http://localhost:5173',
 }));
 
-app.use('/players', players);
-app.use('/seasons', seasons);
-app.use('/schedule', schedule);
-app.use('/teams', teams);
+app.use('/api/players', players);
+app.use('/api/seasons', seasons);
+app.use('/api/schedule', schedule);
+app.use('/api/teams', teams);
