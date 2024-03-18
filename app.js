@@ -16,7 +16,7 @@ app.get('/api', (req, res) => res.send(
   &copy; ${currentYear}`
 ));
 
-const port = process.env.PORT || 8082;
+const port = process.env.PORT || 3000;
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
 
