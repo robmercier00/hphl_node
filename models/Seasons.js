@@ -16,6 +16,10 @@ const SeasonSchema = new mongoose.Schema({
   end_date: {
     type: Date,
     required: true
+  },
+  currentSeason: {
+    type: Boolean,
+    required: false
   }
 });
 

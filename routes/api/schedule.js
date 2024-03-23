@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
   let seasonId = null;
 
   if (currentSeason) {
-    seasonId = await Seasons.findOne({currentSeason: true})
+    seasonId = await Seasons.findOne({currentSeason: 1})
       .then(
         (season) => {
           return season._id;
