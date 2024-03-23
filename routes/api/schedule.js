@@ -15,10 +15,12 @@ router.get('/', async (req, res) => {
     seasonId = await Seasons.findOne({currentSeason: 1})
       .then(
         (season) => {
-          return season._id;
+          return (season === null) ? null : season._id;
         }
       )
-      .catch(err => res.status(404).json({ noSeasonsFound: 'No Seasons found' }));
+      .catch(err => res.status(404).json({
+        noSeasonsFound: 'No Current Season Found'
+      }));
   }
 
   Schedules.find({ season: seasonId })

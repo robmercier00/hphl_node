@@ -3,12 +3,28 @@ const router = express.Router();
 
 const Teams = require('../../models/Teams');
 const Players = require('../../models/Players');
+const Seasons = require('../../models/Seasons');
 
 // @route GET teams
 // @description Get teams and their players
 // @access Public
 router.get('/', async (req, res) => {
-  Teams.find()
+  const currentSeason = req.query.currentSeason;
+  let seasonId = null;
+
+  if (currentSeason) {
+    seasonId = await Seasons.findOne({currentSeason: 1})
+      .then(
+        (season) => {
+          return (season === null) ? null : season._id;
+        }
+      )
+      .catch(err => res.status(404).json({
+        noSeasonsFound: 'No Current Season Found'
+      }));
+  }
+
+  Teams.find({ season: seasonId })
     .then(
       async (teams) => {
         for (let team of teams) {
