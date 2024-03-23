@@ -45,8 +45,8 @@ router.get('/', async (req, res) => {
             }
 
             if (player.isGoalie) {
-              player.goalsAgainst = null;
-              player.savePercentage = null;
+              player.goalsAgainst = 0;
+              player.savePercentage = 0;
 
               // Calculate advanced goalie stats
               if (typeof player.shotsAgainst !== 'undefined') {
