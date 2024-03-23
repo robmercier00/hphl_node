@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const Seasons = require('../../models/Seasons').default;
+const Seasons = require('../../models/Seasons');
 
 // @route GET seasons
 // @description Get all seasons
