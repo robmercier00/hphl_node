@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
   let seasonId = null;
 
   if (currentSeason) {
-    seasonId = await Seasons.findOne({}).sort({ startDate: -1 })
+    seasonId = await Seasons.findOne({currentSeason: true})
       .then(
         (season) => {
           return season._id;
