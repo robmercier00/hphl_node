@@ -9,10 +9,11 @@ const Teams = require('../../models/Teams');
 // @access Public
 router.get('/', async (req, res) => {
   const currentSeason = req.query.currentSeason;
+  const nextWeek = req.query.nextWeek;
   let seasonId = null;
 
   if (currentSeason) {
-    seasonId = await Seasons.findOne({currentSeason: 1})
+    seasonId = await Seasons.findOne({currentSeason: currentSeason})
       .then(
         (season) => {
           return (season === null) ? null : season._id;
@@ -23,7 +24,9 @@ router.get('/', async (req, res) => {
       }));
   }
 
-  Schedules.find({ season: seasonId })
+  const limits = (nextWeek) ? {limit: 6} : {};
+
+  Schedules.find({ season: seasonId }, null, limits)
     .then(
       async (schedules) => {
         for (let i = 0; i < schedules.length; i++) {

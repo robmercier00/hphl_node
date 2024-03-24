@@ -17,6 +17,26 @@ const TeamSchema = new mongoose.Schema({
   players: {
     type: Array,
     required: true
+  },
+  win: {
+    type: Number,
+    required: true,
+    default: 0
+  },
+  loss: {
+    type: Number,
+    required: true,
+    default: 0
+  },
+  tie: {
+    type: Number,
+    required: true,
+    default: 0
+  },
+  points: {
+    type: Number,
+    required: true,
+    default: 0
   }
 });
 

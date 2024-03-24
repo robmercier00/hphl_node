@@ -5,6 +5,7 @@ const players = require('./routes/api/players');
 const teams = require('./routes/api/teams');
 const seasons = require('./routes/api/seasons');
 const schedule = require('./routes/api/schedule');
+const standings = require('./routes/api/standings');
 
 const app = express();
 const currentYear = new Date().getFullYear();
@@ -28,3 +29,4 @@ app.use('/api/players', players);
 app.use('/api/seasons', seasons);
 app.use('/api/schedule', schedule);
 app.use('/api/teams', teams);
+app.use('/api/standings', standings);
