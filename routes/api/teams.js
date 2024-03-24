@@ -24,7 +24,13 @@ router.get('/', async (req, res) => {
       }));
   }
 
-  Teams.find({ season: seasonId })
+  let params = {};
+
+  if (seasonId !== null) {
+    params = { season: seasonId }
+  }
+
+  Teams.find(params)
     .then(
       async (teams) => {
         for (let team of teams) {
@@ -42,14 +48,6 @@ router.get('/', async (req, res) => {
 
             if (!player.goals) {
               player.goals = 0;
-            }
-
-            if (player.isGoalie) {
-              // Calculate advanced goalie stats
-              if (typeof player.shotsAgainst !== 'undefined') {
-                player.goalsAgainst = (+player.shotsAgainst - +player.saves);
-                player.savePercentage = ((+player.goalsAgainst) / (+player.shotsAgainst)).toFixed(2);
-              }
             }
           };
         };
@@ -72,4 +70,3 @@ router.get('/:id', (req, res) => {
 });
 
 module.exports = router;
-// res.json(teams)

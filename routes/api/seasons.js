@@ -8,7 +8,7 @@ const Seasons = require('../../models/Seasons');
 // @access Public
 router.get('/', (req, res) => {
   Seasons.find()
-    .then(seasons => res.json(seasons))
+    .then(seasons => res.status(200).json(seasons))
     .catch(err => res.status(404).json({ noSeasonsfound: 'No Seasons found' }));
 });
 
@@ -19,7 +19,7 @@ router.get('/:id', (req, res) => {
   const seasonId = `UUID('${req.params.id}')`;
   console.log(seasonId);
   Seasons.find(req.params.id)
-    .then(season => res.json(season))
+    .then(season => res.status(200).json(season))
     .catch(err => res.status(404).json({ noSeasonFound: 'No Season found' }));
 });
 
