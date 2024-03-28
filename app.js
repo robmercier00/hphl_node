@@ -6,15 +6,14 @@ const teams = require('./routes/api/teams');
 const seasons = require('./routes/api/seasons');
 const schedule = require('./routes/api/schedule');
 const standings = require('./routes/api/standings');
+const announcements = require('./routes/api/announcements');
 
 const app = express();
-const currentYear = new Date().getFullYear();
 
 connectDB();
 
 app.get('/api', (req, res) => res.send(
-  `Hood Park Hockey League Official Website
-  &copy; ${currentYear}`
+  "Outdoor co-ed, all-ages roller hockey league in Derry, NH. Hood Park Hockey League. Hockey is for everyone."
 ));
 
 const port = process.env.PORT || 3000;
@@ -30,3 +29,4 @@ app.use('/api/seasons', seasons);
 app.use('/api/schedule', schedule);
 app.use('/api/teams', teams);
 app.use('/api/standings', standings);
+app.use('/api/announcements', announcements);

@@ -5,9 +5,11 @@ const Teams = require('../../models/Teams');
 const Players = require('../../models/Players');
 const Seasons = require('../../models/Seasons');
 
-// @route GET teams
-// @description Get teams and their players
-// @access Public
+/**
+ * @route GET teams
+ * @description Get teams and their players
+ * @access Public
+ */
 router.get('/', async (req, res) => {
   const currentSeason = req.query.currentSeason;
   let seasonId = null;
@@ -58,9 +60,11 @@ router.get('/', async (req, res) => {
     .catch(err => res.status(404).json({ noTeamsfound: 'No Teams found' }));
 });
 
-// @route GET teams/:id
-// @description Get single team by id
-// @access Public
+/**
+ * @route GET teams/:id
+ * @description Get single team by id
+ * @access Public
+ */
 router.get('/:id', (req, res) => {
   const teamId = `UUID('${req.params.id}')`;
   console.log(teamId);

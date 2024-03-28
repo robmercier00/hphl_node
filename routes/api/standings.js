@@ -3,9 +3,11 @@ const router = express.Router();
 const Seasons = require('../../models/Seasons');
 const Teams = require('../../models/Teams');
 
-// @route GET standings
-// @description Get all standings
-// @access Public
+/**
+ * @route GET standings
+ * @description Get all standings
+ * @access Public
+ */
 router.get('/', async (req, res) => {
   const seasonId = await Seasons.findOne({currentSeason: true})
     .then(

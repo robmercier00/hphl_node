@@ -4,9 +4,11 @@ const Schedules = require('../../models/Schedules');
 const Seasons = require('../../models/Seasons');
 const Teams = require('../../models/Teams');
 
-// @route GET schedule
-// @description Get all schedule
-// @access Public
+/**
+ * @route GET schedule
+ * @description Get all schedule
+ * @access Public
+ */
 router.get('/', async (req, res) => {
   const currentSeason = req.query.currentSeason;
   const nextWeek = req.query.nextWeek;
@@ -24,9 +26,9 @@ router.get('/', async (req, res) => {
       }));
   }
 
-  const limits = (nextWeek) ? {limit: 6} : {};
+  const limits = (nextWeek) ? 6 : 0;
 
-  Schedules.find({ season: seasonId }, null, limits)
+  Schedules.find({ season: seasonId }).sort({date: 1, time: 1}).limit(limits)
     .then(
       async (schedules) => {
         for (let i = 0; i < schedules.length; i++) {
@@ -59,9 +61,11 @@ router.get('/', async (req, res) => {
     .catch(err => res.status(404).json({ noSchedulesfound: 'No Schedules found' }));
 });
 
-// @route GET seasons/:id
-// @description Get single season by id
-// @access Public
+/**
+ * @route GET seasons/:id
+ * @description Get single season by id
+ * @access Public
+ */
 router.get('/:id', (req, res) => {
   const seasonId = `UUID('${req.params.id}')`;
   console.log(seasonId);
