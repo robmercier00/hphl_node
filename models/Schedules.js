@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-// mongoose.set('debug', true);
 
 const ScheduleSchema = new mongoose.Schema({
   _id: {

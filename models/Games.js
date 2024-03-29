@@ -47,4 +47,4 @@ const GamesSchema = new mongoose.Schema({
   }
 });
 
-module.exports = Season = mongoose.model('season', SeasonSchema);
+module.exports = Season = mongoose.model('season', GamesSchema);

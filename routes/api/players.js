@@ -3,9 +3,11 @@ const router = express.Router();
 
 const Players = require('../../models/Players');
 
-// @route GET players
-// @description Get all players
-// @access Public
+/**
+ * @route GET players
+ * @description Get all players
+ * @access Public
+ */
 router.get('/', (req, res) => {
   const isGoalie = req.query.isGoalie;
   let params = { isGoalie: isGoalie };
@@ -33,9 +35,11 @@ router.get('/', (req, res) => {
     .catch(err => res.status(404).json({ noPlayersfound: 'No Players found' }));
 });
 
-// @route GET players/:id
-// @description Get single player by id
-// @access Public
+/**
+ * @route GET players/:id
+ * @description Get single player by id
+ * @access Public
+ */
 router.get('/:id', (req, res) => {
   const playerId = `UUID('${req.params.id}')`;
   console.log(playerId);
