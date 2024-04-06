@@ -13,7 +13,7 @@ const app = express();
 connectDB();
 
 app.get('/api', (req, res) => res.send(
-  "Outdoor co-ed, all-ages roller hockey league in Derry, NH. Hood Park Hockey League. Hockey is for everyone."
+  "Hood Park Hockey League. Outdoor co-ed, all-ages roller hockey league in Derry, NH. Hockey is for everyone."
 ));
 
 const port = process.env.PORT || 3000;
