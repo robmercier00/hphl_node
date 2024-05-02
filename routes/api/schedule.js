@@ -27,8 +27,9 @@ router.get('/', async (req, res) => {
   }
 
   const limits = (nextWeek) ? 6 : 0;
+  const oneWeek = (nextWeek) ? "date: {$gte: new Date()}" : "";
 
-  Schedules.find({ season: seasonId, date: {$gte: new Date()} }).sort({date: 1, time: 1}).limit(limits)
+  Schedules.find({ season: seasonId, oneWeek }).sort({date: 1, time: 1}).limit(limits)
     .then(
       async (schedules) => {
         for (let i = 0; i < schedules.length; i++) {
