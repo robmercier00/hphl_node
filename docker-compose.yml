@@ -1,0 +1,35 @@
+services:
+  mongodb:
+    image: mongodb/mongodb-community-server:6.0.15-ubuntu2204
+    ports:
+      - 27017:27017
+    expose:
+      - 27017
+    networks:
+      - hphl_net
+  hphl_node:
+    depends_on:
+      - mongodb
+    build: .
+    container_name: hphl_node
+    ports:
+      - 3000:3000
+    expose:
+      - 3000
+    networks:
+      - hphl_net
+  hphl_web:
+    depends_on:
+      - hphl_node
+    build: ../hphl_web
+    container_name: hphl_web
+    ports:
+      - 5173:5173
+    expose:
+      - 5173
+    networks:
+      - hphl_net
+
+networks:
+  hphl_net:
+    driver: bridge
