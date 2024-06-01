@@ -21,6 +21,10 @@ const ScheduleSchema = new mongoose.Schema({
     type: [mongoose.Schema.Types.ObjectId] || String,
     required: false
   },
+  homeTeamPlayers: {
+    type: Array,
+    required: false
+  },
   homeTeamScore: {
     type: Number,
     required: false
@@ -31,6 +35,10 @@ const ScheduleSchema = new mongoose.Schema({
   },
   awayTeamScore: {
     type: Number,
+    required: false
+  },
+  awayTeamPlayers: {
+    type: Array,
     required: false
   },
 });

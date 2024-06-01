@@ -11,9 +11,24 @@ const Teams = require('../../models/Teams');
  */
 router.get("/", async (req, res) => {
   const gameId = req.query.gameId;
-  
 
-  res.json(["one", "two"]);
+  Schedules.find({ _id: gameId })
+    .then( (gameStats) => {
+      gameStats[0].homeTeamPlayers.forEach( player => {
+        if (player.isGoalie) {
+          player.goalsAgainst = gameStats[0].awayTeamScore;
+        }
+      });
+
+      gameStats[0].awayTeamPlayers.forEach( player => {
+        if (player.isGoalie) {
+          player.goalsAgainst = gameStats[0].homeTeamScore;
+        }
+      });
+
+      res.status(200).json(gameStats[0])
+    })
+    .catch(err => res.status(404).json({ noSchedulesfound: 'No Schedules found' }));
 });
 
 module.exports = router;
