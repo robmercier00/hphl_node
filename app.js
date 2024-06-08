@@ -7,6 +7,7 @@ const seasons = require('./routes/api/seasons');
 const schedule = require('./routes/api/schedule');
 const standings = require('./routes/api/standings');
 const announcements = require('./routes/api/announcements');
+const gamePlayerStats = require('./routes/api/gamePlayerStats');
 
 const app = express();
 
@@ -30,3 +31,4 @@ app.use('/api/schedule', schedule);
 app.use('/api/teams', teams);
 app.use('/api/standings', standings);
 app.use('/api/announcements', announcements);
+app.use('/api/gamePlayerStats', gamePlayerStats);
