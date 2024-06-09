@@ -16,13 +16,13 @@ router.get("/", async (req, res) => {
     .then( (gameStats) => {
       gameStats[0].homeTeamPlayers.forEach( player => {
         if (player.isGoalie) {
-          player.goalsAgainst = gameStats[0].awayTeamScore;
+          player.goalsAgainst = player.goalsAgainst || gameStats[0].awayTeamScore;
         }
       });
 
       gameStats[0].awayTeamPlayers.forEach( player => {
         if (player.isGoalie) {
-          player.goalsAgainst = gameStats[0].homeTeamScore;
+          player.goalsAgainst = player.goalsAgainst || gameStats[0].homeTeamScore;
         }
       });
 
