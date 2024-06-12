@@ -50,11 +50,11 @@ router.get('/', async (req, res) => {
           // Check first and second tie breakers
           if (+a.points == +b.points) {
             if (a.goalsFor < b.goalsFor) {
-              return 1;
+              return -1;
             }
 
             if (a.goalsFor > b.goalsFor) {
-              return -1;
+              return 1;
             }
 
             if (+a.goalsFor == +b.goalsFor) {
