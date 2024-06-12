@@ -19,11 +19,15 @@ router.get('/', async (req, res) => {
       noSeasonsFound: 'No Current Season Found'
     }));
 
-  // Team standings are calculated as:
-  // 2 pts for a win
-  // 1 pt for a tie
-  // 0 pts for a tie
-  // Team with the most points is higher in standings
+  /**
+   * Team standings are calculated as:
+   *   2 pts for a win
+   *   1 pt for a tie
+   *   0 pts for a tie
+   * Team with the most points is higher in standings
+   * First tie breaker is goals for
+   * Second tie breaker is goals against
+   */
   Teams.find({ season: seasonId })
     .then(
       (standings) => {        
@@ -43,7 +47,28 @@ router.get('/', async (req, res) => {
           }
 
           // 2 teams must be tied in points
-          return 0;
+          // Check firt and second tie breakers
+          if (a.points === b.points) {
+            if (a.goalsFor < b.goalsFor) {
+              return 1;
+            }
+
+            if (a.goalsFor > b.goalsFor) {
+              return -1;
+            }
+
+            if (a.goalsFor === b.goalsFor) {
+              if (a.goalsAgainst < b.goalsAgainst) {
+                return 1;
+              }
+
+              if (a.goalsAgainst > b.goalsAGainst) {
+                return -1;
+              }
+
+              return 0;
+            }
+          }
         });
 
         res.json(standings);
