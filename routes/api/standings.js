@@ -39,7 +39,7 @@ router.get('/', async (req, res) => {
 
         standings.sort((a, b) => {
           if (
-            (a.points < b.points) ||
+            // (a.points < b.points) ||
             (a.points === b.points && a.goalsFor < b.goalsFor) ||
             (a.points === b.points && a.goalsFor === b.goalsFor && a.goalsAgainst < b.goalsAgainst)
           ) {
@@ -47,7 +47,7 @@ router.get('/', async (req, res) => {
           }
 
           if (
-            (a.points > b.points) ||
+            // (a.points > b.points) ||
             (a.points === b.points && a.goalsFor > b.goalsFor) ||
             (a.points === b.points && a.goalsFor === b.goalsFor && a.goalsAgainst > b.goalsAgainst)
           ) {
