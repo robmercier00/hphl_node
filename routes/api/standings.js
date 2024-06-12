@@ -38,25 +38,48 @@ router.get('/', async (req, res) => {
         }
 
         standings.sort((a, b) => {
-          if (
-            // (a.points < b.points) ||
-            (a.points === b.points && a.goalsFor < b.goalsFor) ||
-            (a.points === b.points && a.goalsFor === b.goalsFor && a.goalsAgainst < b.goalsAgainst)
-          ) {
+          if (a.points < b.points) {
             return 1;
           }
 
-          if (
-            // (a.points > b.points) ||
-            (a.points === b.points && a.goalsFor > b.goalsFor) ||
-            (a.points === b.points && a.goalsFor === b.goalsFor && a.goalsAgainst > b.goalsAgainst)
-          ) {
+          if (a.points > b.points) {
             return -1;
           }
 
+          // 2 teams must be tied in points
           return 0;
         });
 
+        // Secondary sort
+        standings.sort((a, b) => {
+          // Check first tiebreaker
+          if (a.points === b.points) {
+            if (a.goalsFor < b.goalsFor) {
+              return 1;
+            }
+
+            if (a.goalsFor > b.goalsFor) {
+              return -1;
+            }
+
+            return 0;
+          }
+        });
+
+        // Tertiary sort
+        standings.sort((a, b) => {
+          if (a.goalsFor === b.goalsFor) {
+            if (a.goalsAgainst < b.goalsAgainst) {
+              return 1;
+            }
+
+            if (a.goalsAgainst > b.goalsAGainst) {
+              return -1;
+            }
+
+            return 0;
+          }
+        });
         res.json(standings);
       }
     )
