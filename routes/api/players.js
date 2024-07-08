@@ -48,7 +48,7 @@ router.get('/', async (req, res) => {
                 // Calculate advanced goalie stats
                 if (typeof player.shotsAgainst !== 'undefined') {
                   player.goalsAgainst = (+player.shotsAgainst - +player.saves);
-                  player.savePercentage = ((+player.shotsAgainst) / (+player.goalsAgainst)).toFixed(2);
+                  player.savePercentage = (((+player.shotsAgainst) / (+player.goalsAgainst)) / 100).toFixed(3);
                 }
               }
             }
@@ -67,7 +67,7 @@ router.get('/', async (req, res) => {
               // Calculate advanced goalie stats
               if (typeof player.shotsAgainst !== 'undefined') {
                 player.goalsAgainst = (+player.shotsAgainst - +player.saves);
-                player.savePercentage = ((+player.shotsAgainst) / (+player.goalsAgainst)).toFixed(2);
+                player.savePercentage = (((+player.shotsAgainst) / (+player.goalsAgainst)) / 100).toFixed(3);
               }
             }
           }
