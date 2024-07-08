@@ -38,7 +38,9 @@ router.get('/', async (req, res) => {
 
           for (let team of teams) {
             for (let player of team.players) {
-              if ((!player.isGoalie && isGoalie === 'false') || (player.isGoalie && isGoalie !== 'false')) {
+              if (((!player.isGoalie && isGoalie === 'false') ||
+                (player.isGoalie && isGoalie !== 'false')) &&
+                (!player.isSub || !player.isSub === 'true')) {
                 seasonPlayers.push(player);
               }
             }
