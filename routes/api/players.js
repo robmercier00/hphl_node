@@ -43,6 +43,14 @@ router.get('/', async (req, res) => {
                 (!player.isSub || !player.isSub === 'true')) {
                 seasonPlayers.push(player);
               }
+
+              if (player.isGoalie) {
+                // Calculate advanced goalie stats
+                if (typeof player.shotsAgainst !== 'undefined') {
+                  player.goalsAgainst = (+player.shotsAgainst - +player.saves);
+                  player.savePercentage = ((+player.goalsAgainst) / (+player.shotsAgainst)).toFixed(2);
+                }
+              }
             }
           }
 
