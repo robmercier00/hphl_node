@@ -40,7 +40,7 @@ router.get('/', async (req, res) => {
             for (let player of team.players) {
               if (((!player.isGoalie && isGoalie === 'false') ||
                 (player.isGoalie && isGoalie !== 'false')) &&
-                (!player.isSub && !player.isSub === 'true')) {
+                (!player.isSub || !player.isSub === 'true')) {
                 seasonPlayers.push(player);
               }
 
@@ -48,7 +48,7 @@ router.get('/', async (req, res) => {
                 // Calculate advanced goalie stats
                 if (typeof player.shotsAgainst !== 'undefined') {
                   player.goalsAgainst = (+player.shotsAgainst - +player.saves);
-                  player.savePercentage = ((+player.goalsAgainst) / (+player.shotsAgainst)).toFixed(2);
+                  player.savePercentage = ((+player.shotsAgainst) / (+player.goalsAgainst)).toFixed(2);
                 }
               }
             }
@@ -67,7 +67,7 @@ router.get('/', async (req, res) => {
               // Calculate advanced goalie stats
               if (typeof player.shotsAgainst !== 'undefined') {
                 player.goalsAgainst = (+player.shotsAgainst - +player.saves);
-                player.savePercentage = ((+player.goalsAgainst) / (+player.shotsAgainst)).toFixed(2);
+                player.savePercentage = ((+player.shotsAgainst) / (+player.goalsAgainst)).toFixed(2);
               }
             }
           }
