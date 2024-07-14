@@ -37,16 +37,16 @@ router.get('/', async (req, res) => {
           team.points = +team.points + +team.tie;
         }
 
-        standings.sort((a, b) => {
-          if (a.points === b.points) {
-            // if (a.goalsFor === b.goalsFor) {
-            //   return a.goalsAgainst < b.goalsAgainst ? -1 : 1;
-            // }
-            
-            return a.goalsFor < b.goalsFor ? 1 : -1;
+        standings = standings.sort((a, b) => {
+          if (+a.points === +b.points) {
+            if (+a.goalsFor === +b.goalsFor) {
+              return +a.goalsAgainst > +b.goalsAgainst ? -1 : 1;
+            }
+
+            return +a.goalsFor > +b.goalsFor ? 1 : -1;
           }
           
-          return a.points < b.points ? 1 : -1;
+          return +a.points > +b.points ? -1 : 1;
         });
 
         res.json(standings);
