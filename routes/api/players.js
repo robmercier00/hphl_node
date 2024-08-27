@@ -49,7 +49,7 @@ router.get('/', async (req, res) => {
                 if (typeof player.shotsAgainst !== 'undefined') {
                   player.goalsAgainst = player.goalsAgainst || (+player.shotsAgainst - +player.saves);
                   player.saves = player.saves || (+player.shotsAgainst - +player.goalsAgainst);
-                  player.savePercentage = +player.shotsAgainst / +player.saves.toFixed(3);
+                  player.savePercentage = (+player.saves / +player.shotsAgainst).toFixed(3);
                 }
               }
             }
@@ -69,7 +69,7 @@ router.get('/', async (req, res) => {
               if (typeof player.shotsAgainst !== 'undefined') {
                 player.goalsAgainst = player.goalsAgainst || (+player.shotsAgainst - +player.saves);
                 player.saves = player.saves || (+player.shotsAgainst - +player.goalsAgainst);
-                player.savePercentage = +player.shotsAgainst / +player.saves.toFixed(3);
+                player.savePercentage = (+player.saves / +player.shotsAgainst).toFixed(3);
               }
             }
           }
