@@ -45,11 +45,11 @@ router.get('/', async (req, res) => {
             }
 
             if (!player.assists) {
-              player.assists = 0;
+              player.assists = null;
             }
 
             if (!player.goals) {
-              player.goals = 0;
+              player.goals = null;
             }
           };
         };
