@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 
 const PlayerSchema = new mongoose.Schema({
   _id: {
-    type: [mongoose.Schema.Types.ObjectId],
-    required: true
+    type: mongoose.Types.ObjectId,
+    required: false
   },
   name: {
     type: String,
@@ -11,17 +11,17 @@ const PlayerSchema = new mongoose.Schema({
   },
   gamesPlayed: {
     type: Number,
-    required: true,
+    required: false,
     default: 0
   },
   goals: {
     type: Number,
-    required: true,
+    required: false,
     default: 0
   },
   assists: {
     type: Number,
-    required: true,
+    required: false,
     default: 0
   },
   shotsAgainst: {

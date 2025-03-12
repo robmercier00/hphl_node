@@ -1,22 +1,25 @@
 const mongoose = require('mongoose');
-// mongoose.set('debug', true);
 
 const TeamSchema = new mongoose.Schema({
   _id: {
-    type: [mongoose.Schema.Types.ObjectId],
-    required: true
+    type: mongoose.Types.ObjectId,
+    required: false
   },
   name: {
     type: String,
     required: true
   },
+  color: {
+    type: String,
+    required: false
+  },
   season: {
-    type: [mongoose.Schema.Types.ObjectId],
+    type: mongoose.Types.ObjectId,
     required: true
   },
   players: {
     type: Array,
-    required: true
+    required: false
   },
   win: {
     type: Number,
