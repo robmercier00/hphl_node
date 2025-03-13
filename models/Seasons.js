@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 
 const SeasonSchema = new mongoose.Schema({
   _id: {
-    type: String,
-    required: true
+    type: mongoose.Types.ObjectId,
+    required: false
   },
   name: {
     type: String,
