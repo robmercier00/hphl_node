@@ -69,6 +69,7 @@ router.post('/', async (req, res) => {
     }
   })
   .catch(err => res.status(404).json({ noAdminfound: 'No Admin found' }));
+  console.log("adminUser");
 
   if (adminUser) {
     const token = crypto.randomBytes(Math.ceil(20 / 2)).toString('hex').slice(0, 20);
