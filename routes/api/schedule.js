@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 const Schedules = require('../../models/Schedules');
 const Seasons = require('../../models/Seasons');
 const Teams = require('../../models/Teams');
@@ -43,8 +44,8 @@ router.get('/', async (req, res) => {
 
           schedules[i] = {
             ...schedules[i].toObject(),
-            homeTeam: homeTeam[0].name,
-            awayTeam: awayTeam[0].name
+            homeTeamName: homeTeam[0].name,
+            awayTeamName: awayTeam[0].name
           };
         }
 
@@ -59,7 +60,7 @@ router.get('/', async (req, res) => {
         };
         
         const formattedSchedule = groupBy(schedules, 'date');
-        res.json(formattedSchedule);
+        res.status(200).json(formattedSchedule);
       }
     )
     .catch(err => res.status(404).json({ noSchedulesfound: 'No Schedules found' }));
@@ -74,8 +75,34 @@ router.get('/:id', (req, res) => {
   const seasonId = `UUID('${req.params.id}')`;
   console.log(seasonId);
   Schedules.find(req.params.id)
-    .then(season => res.json(season))
+    .then(season => res.status(200).json(season))
     .catch(err => res.status(404).json({ noScheduleFound: 'No Schedule found' }));
+});
+
+/**
+ * @route PUT scheduled game metadata
+ * @description PUT metadata related to a specific scheduled game
+ * @access Public
+ */
+router.put('/', async (req, res) => {
+  const game = req.query.game;
+  const gameId = mongoose.Types.ObjectId.createFromHexString(game._id);
+  delete(game._id);
+  game.season = mongoose.Types.ObjectId.createFromHexString(game.season);
+  game.homeTeam = mongoose.Types.ObjectId.createFromHexString(game.homeTeam);
+  game.awayTeam = mongoose.Types.ObjectId.createFromHexString(game.awayTeam);
+  console.log("gameId");
+  console.log(gameId);
+  console.log("game");
+  console.log(game);
+  const gameRecord = await Schedules.findOneAndUpdate(
+    {_id: gameId},
+    {$set: game}
+  )
+  .then((game) => {
+    res.status(200).json(game);
+  })
+  .catch(err => res.status(404).json({ scheduleNotUpdated: 'Schedule could not be updated' }));
 });
 
 module.exports = router;
