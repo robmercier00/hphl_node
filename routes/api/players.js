@@ -15,14 +15,22 @@ router.get('/', async (req, res) => {
   const isCurrentSeason = req.query.isCurrentSeason;
   const isGoalie = req.query.isGoalie;
   const allPlayers = req.query.allPlayers;
+  const isSearch = req.query.search;
+  const searchString = req.query.searchString;
+
+  const PlayersModel = mongoose.model('player', Players);
+
   const SeasonsModel = mongoose.model('season', Seasons);
   const TeamsModel = mongoose.model('team', Teams);
-  const PlayersModel = mongoose.model('player', Players);
 
   let params = {};
 
-  if (!allPlayers && isGoalie === 'false') {
+  if (!allPlayers && !isSearch && isGoalie === 'false') {
     params = { isGoalie: isGoalie };
+  }
+
+  if (isSearch && searchString) {
+    params = { "name": { $regex: new RegExp(searchString, "i") } };
   }
 
   if (isCurrentSeason) {

@@ -75,7 +75,7 @@ router.get('/', async (req, res) => {
  */
 router.get('/:id', (req, res) => {
   const TeamsModel = mongoose.model('team', Teams);
-  TeamsModel.find(req.params.id)
+  TeamsModel.find({_id: new mongoose.Types.ObjectId(req.params.id)})
     .then(team => res.json(team))
     .catch(err => res.status(404).json({ noTeamFound: 'No Team found' }));
 });

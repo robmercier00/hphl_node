@@ -18,7 +18,7 @@ const ScheduleSchema = new mongoose.Schema({
     required: false
   },
   homeTeam: {
-    type: [mongoose.Schema.Types.ObjectId] || String,
+    type: [mongoose.Schema.Types.ObjectId],
     required: false
   },
   homeTeamPlayers: {
@@ -30,7 +30,7 @@ const ScheduleSchema = new mongoose.Schema({
     required: false
   },
   awayTeam: {
-    type: [mongoose.Schema.Types.ObjectId] || String,
+    type: [mongoose.Schema.Types.ObjectId],
     required: false
   },
   awayTeamScore: {
