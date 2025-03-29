@@ -91,18 +91,90 @@ router.put('/', async (req, res) => {
   game.season = mongoose.Types.ObjectId.createFromHexString(game.season);
   game.homeTeam = mongoose.Types.ObjectId.createFromHexString(game.homeTeam);
   game.awayTeam = mongoose.Types.ObjectId.createFromHexString(game.awayTeam);
-  console.log("gameId");
-  console.log(gameId);
-  console.log("game");
-  console.log(game);
-  const gameRecord = await Schedules.findOneAndUpdate(
+
+  
+  await Schedules.findOneAndUpdate(
     {_id: gameId},
     {$set: game}
   )
-  .then((game) => {
+  .then(async (game) => {
+    const homeTeam = game.homeTeam;
+    const awayTeam = game.awayTeam;
+    const homeTeamScore = game.homeTeamScore;
+    const awayTeamScore = game.awayTeamScore;
+    const awayTeamPlayers = game.awayTeamPlayers;
+    const homeTeamPlayers = game.homeTeamPlayers;
+    let homeTeamWins = 0;
+    let homeTeamLosses = 0;
+    let homeTeamTies = 0;
+    let homeTeamPoints = 0;
+    let awayTeamWins = 0;
+    let awayTeamLosses = 0;
+    let awayTeamTies = 0;
+    let awayTeamPoints = 0;
+
+    // Set team stats
+    if (+homeTeamScore === +awayTeamScore) {
+      homeTeamTies = 1;
+      awayTeamTies = 1;
+
+      homeTeamPoints = 1;
+      awayTeamPoints = 1;
+    } else if (+homeTeamScore > +awayTeamScore) {
+      homeTeamWins = 1;
+      awayTeamLosses = 1;
+
+      homeTeamPoints = 2;
+    } else if (+homeTeamScore < +awayTeamScore) {
+      awayTeamWins = 1;
+      homeTeamLosses = 1;
+
+      awayTeamPoints = 2;
+    }
+
+    const homeTeamStats = {
+      "goalsAgainst": +awayTeamScore,
+      "goalsFor": +homeTeamScore,
+      "win": +homeTeamWins,
+      "loss": +homeTeamLosses,
+      "tie": +homeTeamTies,
+      "points": +homeTeamPoints,
+    };
+
+    const awayTeamStats = {
+      "goalsAgainst": +homeTeamScore,
+      "goalsFor": +awayTeamScore,
+      "win": +awayTeamWins,
+      "loss": +awayTeamLosses,
+      "tie": +awayTeamTies,
+      "points": +awayTeamPoints,
+    };
+
+    homeTeamupdated = await Teams.findOneAndUpdate(
+      { _id: homeTeam },
+      { $inc: homeTeamStats }
+    )
+    .then(() => {
+      return true;
+    })
+    .catch(err => res.status(404).json({ teamStatsNotUpdated: "Home Team stats could not be updated"}));
+
+    awayTeamUpdated = await Teams.findOneAndUpdate(
+      { _id: awayTeam },
+      { $inc: awayTeamStats }
+    )
+    .then(() => {
+      return true;
+    })
+    .catch(err => res.status(404).json({ teamStatsNotUpdated: "Away Team stats could not be updated"}));
+
+    // Set player stats
+    
+    // All updates finished
     res.status(200).json(game);
   })
   .catch(err => res.status(404).json({ scheduleNotUpdated: 'Schedule could not be updated' }));
+
 });
 
 module.exports = router;
