@@ -40,6 +40,16 @@ const TeamSchema = new mongoose.Schema({
     type: Number,
     required: true,
     default: 0
+  },
+  goalsFor: {
+    type: Number,
+    required: true,
+    default: 0
+  },
+  goalsAgainst: {
+    type: Number,
+    required: true,
+    default: 0
   }
 });
 
